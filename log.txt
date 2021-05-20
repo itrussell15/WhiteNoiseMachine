@@ -1,0 +1,4 @@
+Beginning of the log at 2021-05-19 23:26:00.160635
+2021-05-19 23:26:00.166103 --> Night Time Check Passed
+2021-05-19 23:26:00.170105 --> Not Playing Check Passed
+2021-05-19 23:26:00.174106 --> Is Home Check Passed
