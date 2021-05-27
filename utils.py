@@ -20,6 +20,7 @@ class Sonos:
         favorites = self.__device.get_sonos_favorites()
         self.__radio = favorites["favorites"][2]["uri"]
         self.desired_volume = desired_volume
+        self.volume = self.__device.volume
         self.is_playing = False
         self.check_is_playing()
 
@@ -45,8 +46,14 @@ class Sonos:
         self.__device.volume = value
     
     def check_is_playing(self):
+        self.volume = self.__device.volume
         state = self.__device.get_current_transport_info()
         self.is_playing = state["current_transport_state"] == "PLAYING"
+        
+    def current_track(self):
+        return self.__device.get_current_track_info()["title"]
+    
+    
 
 class iCloud:
     

@@ -2,4 +2,5 @@ Secrets.txt
 __pycache__/
 location.txt
 map.html
+test.py
 log.txt

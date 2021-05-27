@@ -27,20 +27,31 @@ def write_to_log(message, to_print = False):
 create_file()
 print("Starting Program")
 
+old = None
+
 while True:
     
     if time_check(hour = 23, minute = 15):
-        #write_to_log("Night Time Check Passed")
+        player.check_is_playing()
         if not player.is_playing:
             write_to_log("Not Playing Check Passed")
+            
             if cloud.is_home():
                 write_to_log("Is Home Check Passed")
+                
                 if cloud.is_charging():
                     write_to_log("All tests passed! Music Started Playing!", to_print = True)
                     player.play_fresh()
-    else:
-        print("Not late enough")
-        time.sleep(10)
+        else:
+            current = player.current_track()
+            if current != old:
+                write_to_log("Now Playing --> {}".format(current))
+                if current == "":
+                    player.set_volume(1)
+                    write_to_log("Ad detected, volume turned down", to_print = True)
+            old = current
+
+time.sleep(10)
                     
 #    if time_check(hour = 6, minute = 30):
 #        write_to_log("Morning Time Check Passed")
