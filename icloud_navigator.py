@@ -33,8 +33,10 @@ while True:
     
     if time_check(hour = 23, minute = 15):
         player.check_is_playing()
+        
         if not player.is_playing:
             write_to_log("Not Playing Check Passed")
+            cloud.update_phone()
             
             if cloud.is_home():
                 write_to_log("Is Home Check Passed")
