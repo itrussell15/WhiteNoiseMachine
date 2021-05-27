@@ -44,11 +44,15 @@ while True:
                     player.play_fresh()
         else:
             current = player.current_track()
-            if current != old:
-                write_to_log("Now Playing --> {}".format(current))
-                if current == "":
-                    player.set_volume(1)
-                    write_to_log("Ad detected, volume turned down", to_print = True)
+        if current != old:
+            if current == "":
+                player.set_volume(0)
+                write_to_log("Ad detected, volume turned down", to_print = True)
+            else:
+                write_to_log("Now Playing {}".format(current), to_print = True)
+                if player.volume != player.desired_volume:
+                    write_to_log("Ad done playing, turned volume back to desired", to_print = True)
+                    player.ramp_volume()
             old = current
 
 time.sleep(10)
