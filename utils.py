@@ -12,7 +12,7 @@ import soco, warnings
 
 class Sonos:
     
-    def __init__(self, desired_volume = 10):
+    def __init__(self, desired_volume = 11):
         
         warnings.simplefilter("ignore", UserWarning)
         
@@ -51,7 +51,7 @@ class Sonos:
 class iCloud:
     
     def __init__(self):
-        creds = self.__load_creds(os.getcwd() + "\\Secrets.txt")
+        creds = self.__load_creds(os.getcwd() + "/Secrets.txt")
         self.api = PyiCloudService(creds[0], creds[1])
         self.__two_factor_routine()
         self.phone = self.Phone()
