@@ -10,6 +10,11 @@ import sys, os
 import datetime, time
 import soco, warnings
 
+class Logging:
+    
+    def __init__(self):
+        pass
+
 class Sonos:
     
     def __init__(self, desired_volume = 11):
