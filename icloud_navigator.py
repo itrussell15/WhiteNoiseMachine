@@ -33,9 +33,11 @@ while True:
     
     if time_check(hour = 23, minute = 15):
         player.check_is_playing()
+        
         if not player.is_playing:
             write_to_log("Not Playing Check Passed")
             cloud.update_phone()
+            
             if cloud.is_home():
                 write_to_log("Is Home Check Passed")
                 
@@ -45,13 +47,17 @@ while True:
         else:
             current = player.current_track()
             if current != old:
-                write_to_log("Now Playing --> {}".format(current))
                 if current == "":
-                    player.set_volume(1)
+                    player.set_volume(0)
                     write_to_log("Ad detected, volume turned down", to_print = True)
-            old = current
+                else:
+                    write_to_log("Now Playing {}".format(current), to_print = True)
+                    if player.volume != player.desired_volume:
+                        write_to_log("Ad done playing, turned volume back to desired", to_print = True)
+                        player.ramp_volume()
+                old = current
 
-time.sleep(60)
+time.sleep(30)
                     
 #    if time_check(hour = 6, minute = 30):
 #        write_to_log("Morning Time Check Passed")
