@@ -12,8 +12,28 @@ import soco, warnings
 
 class Logging:
     
-    def __init__(self):
-        pass
+    def __init__(self, path = "log.txt"):
+        self.path = path
+        if path not in os.listdir(os.getcwd()):
+            self.__create_file()
+        # self.log = self.write_to_log(path)
+        
+    #Create file method, to be used only if needed.
+    def __create_file(self):
+        with open(self.path, "w") as f:
+            f.close()   
+        self.write_to_log("Beginning of Log")
+    
+    def write_to_log(self, message, action = "GENERIC", to_print = False):
+        if self.path not in os.listdir(os.getcwd()):
+            self.__create_file()
+            
+        if to_print:
+            print(message)
+            
+        with open(os.getcwd() + "\{}".format(self.path), "a") as f:
+            f.write("\n{action}:{date} --> {message}".format(action = action, date = datetime.datetime.now(), message = message))
+            f.close() 
 
 class Sonos:
     
