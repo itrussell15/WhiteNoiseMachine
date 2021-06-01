@@ -35,7 +35,7 @@ while True:
         player.check_is_playing()
         if not player.is_playing:
             write_to_log("Not Playing Check Passed")
-            
+            cloud.update_phone()
             if cloud.is_home():
                 write_to_log("Is Home Check Passed")
                 
@@ -51,7 +51,7 @@ while True:
                     write_to_log("Ad detected, volume turned down", to_print = True)
             old = current
 
-time.sleep(10)
+time.sleep(60)
                     
 #    if time_check(hour = 6, minute = 30):
 #        write_to_log("Morning Time Check Passed")
