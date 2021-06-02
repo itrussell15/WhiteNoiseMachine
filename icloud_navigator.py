@@ -6,7 +6,7 @@ Created on Sat May 15 13:26:53 2021
 """
 
 from utils import iCloud, Sonos, Logging, time_check
-import datetime, time
+import time
 
 cloud = iCloud()
 player = Sonos()
@@ -24,23 +24,24 @@ while True:
         log.write_to_log("Not Playing Check Passed", action = "CHECK")
         cloud.update_phone()
             
-            if cloud.is_home():
-                log.write_to_log("Is Home Check Passed", "CHECK")
-                
-                if cloud.is_charging():
-                    log.write_to_log("All tests passed! Music Started Playing!", to_print = True, action = "CHECK")
-                    player.play_fresh()
-        else:
-            current = player.current_track()
-            if current != old:
-                if current == "":
-                    log.write_to_log("Ad detected, volume turned down", to_print = True, action = "MUSIC")
-                    player.set_volume(0)
-                else:
-                    log.write_to_log("Now Playing {}".format(current), to_print = True, action = "MUSIC")
-                    if player.volume != player.desired_volume:
-                        log.write_to_log("Ad done playing, turned volume back to desired", to_print = True, action = "MUSIC")
-                        player.ramp_volume()
-                old = current
+        if cloud.is_home():
+            log.write_to_log("Is Home Check Passed", "CHECK")
+            
+            player.check_is_playing()
+            if cloud.is_charging() and player.is_playing:
+                log.write_to_log("All tests passed! Music Started Playing!", to_print = True, action = "CHECK")
+                player.play_fresh()
+    else:
+        current = player.current_track()
+        if current != old:
+            if current == "":
+                log.write_to_log("Ad detected, volume turned down", to_print = True, action = "MUSIC")
+                player.set_volume(0)
+            else:
+                log.write_to_log("Now Playing {}".format(current), to_print = True, action = "MUSIC")
+                if player.volume != player.desired_volume:
+                    log.write_to_log("Ad done playing, turned volume back to desired", to_print = True, action = "MUSIC")
+                    player.ramp_volume()
+            old = current
 
-time.sleep(30)        
+time.sleep(10)        

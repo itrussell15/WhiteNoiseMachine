@@ -21,6 +21,7 @@ class Logging:
     def formatted_time(self):
         format_time = lambda x: x.strftime("%H:%M:%S %m-%d-%Y")
         return format_time(datetime.datetime.now())
+    
     #Create file method, to be used only if needed.
     def __create_file(self):
         with open(self.path, "w") as f:
