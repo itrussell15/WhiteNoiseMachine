@@ -11,33 +11,18 @@ import datetime, time
 cloud = iCloud()
 player = Sonos()
 log = Logging()
-format_time = lambda x: x.strftime("%H:%M:%S %m-%d-%Y")
 
-# def create_file():
-#     with open("log.txt", "w") as f:
-#         f.write("Beginning of the log at {}".format(datetime.datetime.now()))
-#         f.close()
 
-# def write_to_log(message, to_print = False):
-#     if to_print:
-#         print(message)
-#     with open("log.txt", "a") as f:
-#         f.write("\n{date} --> {message}".format(date = datetime.datetime.now(), message = message))
-#         f.close()
-        
-# create_file()
 log.write_to_log("Program Starting", action = "GENERIC", to_print = True)
 
 old = None
 
 while True:
     
-    if time_check(hour = 23, minute = 15):
-        player.check_is_playing()
-        
-        if not player.is_playing:
-            log.write_to_log("Not Playing Check Passed", action = "CHECK")
-            cloud.update_phone()
+    player.check_is_playing()
+    if not player.is_playing and time_check(hour = 20, minute = 00):
+        log.write_to_log("Not Playing Check Passed", action = "CHECK")
+        cloud.update_phone()
             
             if cloud.is_home():
                 log.write_to_log("Is Home Check Passed", "CHECK")
@@ -50,6 +35,7 @@ while True:
             if current != old:
                 if current == "":
                     log.write_to_log("Ad detected, volume turned down", to_print = True, action = "MUSIC")
+                    player.set_volume(0)
                 else:
                     log.write_to_log("Now Playing {}".format(current), to_print = True, action = "MUSIC")
                     if player.volume != player.desired_volume:

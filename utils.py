@@ -17,7 +17,10 @@ class Logging:
         if path not in os.listdir(os.getcwd()):
             self.__create_file()
         # self.log = self.write_to_log(path)
-        
+    
+    def formatted_time(self):
+        format_time = lambda x: x.strftime("%H:%M:%S %m-%d-%Y")
+        return format_time(datetime.datetime.now())
     #Create file method, to be used only if needed.
     def __create_file(self):
         with open(self.path, "w") as f:
@@ -32,7 +35,7 @@ class Logging:
             print(message)
             
         with open(os.getcwd() + "\{}".format(self.path), "a") as f:
-            f.write("\n{action}:{date} --> {message}".format(action = action, date = datetime.datetime.now(), message = message))
+            f.write("\n{action}:{date} --> {message}".format(action = action, date = self.formatted_time(), message = message))
             f.close() 
 
 class Sonos:
