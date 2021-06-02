@@ -81,8 +81,6 @@ class Sonos:
         
     def current_track(self):
         return self.__device.get_current_track_info()["title"]
-    
-    
 
 class iCloud:
     
