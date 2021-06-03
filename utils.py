@@ -35,7 +35,7 @@ class Logging:
         if to_print:
             print(message)
             
-        with open(os.getcwd() + "\{}".format(self.path), "a") as f:
+        with open(os.getcwd() + "/{}".format(self.path), "a") as f:
             f.write("\n{action}:{date} --> {message}".format(action = action, date = self.formatted_time(), message = message))
             f.close() 
 
