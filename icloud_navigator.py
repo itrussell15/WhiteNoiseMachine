@@ -45,4 +45,5 @@ while True:
                         player.ramp_volume()
                 old = current
 
-time.sleep(10)        
+    time.sleep(15)
+#     print("TICK")
