@@ -17,7 +17,7 @@ old = None
 while True:
     
     player.check_is_playing()
-    if not player.is_playing and time_check(hour = 21, minute = 15):
+    if not player.is_playing and time_check(hour = 23, minute = 15):
         log.write("Not Playing Check Passed")
         cloud.update_phone()
             

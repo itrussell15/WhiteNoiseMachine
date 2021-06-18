@@ -181,15 +181,14 @@ class iCloud:
             self.location = [lat, long]
             
 def USB_iPhone():
-    # command = subprocess.Popen(["lsusb"], stdout = subprocess.PIPE, shell = True)
-    # (out, err) = command.communicate()
-    # devices = out.decode("utf-8").split("\n")
-    # for i in devices:
-    #     name = i.split(" ")[-1][:6]
-    #     if name == "iPhone":
-    #         return True
-    # return False     
-    return True      
+    command = subprocess.Popen(["lsusb"], stdout = subprocess.PIPE, shell = True)
+    (out, err) = command.communicate()
+    devices = out.decode("utf-8").split("\n")
+    for i in devices:
+        name = i.split(" ")[-1][:6]
+        if name == "iPhone":
+            return True
+    return False         
             
 def time_check(hour, minute):
     # Night time 23 hour, 15 min
