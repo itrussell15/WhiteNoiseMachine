@@ -7,37 +7,25 @@ Created on Sat May 15 13:26:53 2021
 
 from pyicloud import PyiCloudService
 import sys, os, subprocess
-import datetime, time
+import datetime, time, logging
 import soco, warnings
 
 class Logging:
     
-    def __init__(self, path = "log.txt"):
-        self.path = path
-        if path not in os.listdir(os.getcwd()):
-            self.__create_file()
-        # self.log = self.write_to_log(path)
-    
-    def formatted_time(self):
-        format_time = lambda x: x.strftime("%H:%M:%S %m-%d-%Y")
-        return format_time(datetime.datetime.now())
-    
-    #Create file method, to be used only if needed.
-    def __create_file(self):
-        with open(self.path, "w") as f:
-            f.close()   
-        self.write_to_log("Beginning of Log")
-    
-    def write_to_log(self, message, action = "GENERIC", to_print = False):
-        if self.path not in os.listdir(os.getcwd()):
-            self.__create_file()
-            
+    def __init__(self):
+        log_format = '%(asctime)s %(message)s'
+        logging.basicConfig(filename='WhiteNoise.log',
+                            format = log_format,
+                            filemode = "a",
+                            level = logging.INFO)    
+        logging.getLogger('soco').setLevel(logging.WARNING)
+        self.log = logging.getLogger("WhiteNoiseLogger")
+        self.log.info("Program started running")
+        
+    def write(self, message, to_print = True):
+        self.log.info(message)
         if to_print:
             print(message)
-            
-        with open(os.getcwd() + "/{}".format(self.path), "a") as f:
-            f.write("\n{action}:{date} --> {message}".format(action = action, date = self.formatted_time(), message = message))
-            f.close() 
 
 class Sonos:
     
@@ -193,14 +181,15 @@ class iCloud:
             self.location = [lat, long]
             
 def USB_iPhone():
-    command = subprocess.Popen(["lsusb"], stdout = subprocess.PIPE, shell = True)
-    (out, err) = command.communicate()
-    devices = out.decode("utf-8").split("\n")
-    for i in devices:
-        name = i.split(" ")[-1][:6]
-        if name == "iPhone":
-            return True
-    return False           
+    # command = subprocess.Popen(["lsusb"], stdout = subprocess.PIPE, shell = True)
+    # (out, err) = command.communicate()
+    # devices = out.decode("utf-8").split("\n")
+    # for i in devices:
+    #     name = i.split(" ")[-1][:6]
+    #     if name == "iPhone":
+    #         return True
+    # return False     
+    return True      
             
 def time_check(hour, minute):
     # Night time 23 hour, 15 min
