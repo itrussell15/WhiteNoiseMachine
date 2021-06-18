@@ -6,7 +6,7 @@ Created on Sat May 15 13:26:53 2021
 """
 
 from pyicloud import PyiCloudService
-import sys, os
+import sys, os, subprocess
 import datetime, time
 import soco, warnings
 
@@ -158,7 +158,7 @@ class iCloud:
         count = 0
         
         while True:
-            time.sleep(10) 
+            time.sleep(20)
             second = self.api.devices[1].status()["batteryLevel"]
             print("First {} --> Second {}".format(first, second))
             if second != first:
@@ -191,6 +191,16 @@ class iCloud:
             lat = content["location"]["latitude"]
             long = content["location"]["longitude"]
             self.location = [lat, long]
+            
+def USB_iPhone():
+    command = subprocess.Popen(["lsusb"], stdout = subprocess.PIPE, shell = True)
+    (out, err) = command.communicate()
+    devices = out.decode("utf-8").split("\n")
+    for i in devices:
+        name = i.split(" ")[-1][:6]
+        if name == "iPhone":
+            return True
+    return False           
             
 def time_check(hour, minute):
     # Night time 23 hour, 15 min

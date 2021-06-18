@@ -5,7 +5,7 @@ Created on Sat May 15 13:26:53 2021
 @author: Schmuck
 """
 
-from utils import iCloud, Sonos, Logging, time_check
+from utils import iCloud, Sonos, Logging, time_check, USB_iPhone
 import time
 
 cloud = iCloud()
@@ -28,7 +28,8 @@ while True:
             log.write_to_log("Is Home Check Passed", "CHECK")
             
             player.check_is_playing()
-            if cloud.is_charging() and player.is_playing:
+            #if cloud.is_charging() and player.is_playing:
+            if USB_iPhone() and player.is_playing:
                 log.write_to_log("All tests passed! Music Started Playing!", to_print = True, action = "CHECK")
                 player.play_fresh()
     else:
@@ -46,4 +47,4 @@ while True:
                 old = current
 
     time.sleep(15)
-#     print("TICK")
+    print("TICK")
